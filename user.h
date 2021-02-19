@@ -13,11 +13,6 @@ class User {
         string lastName;
         bool isAdminAccount;
         string password;
-        // struct account {
-        //     string accountName;
-        //     double balance;
-        // };
-        // vector<account> accounts;
     public:
         User();
         User(int accountNumber);
@@ -32,6 +27,7 @@ class User {
         void setMiddleName(string middleName);
         void setLastName(string lastName);
         void setPassword(string password);
+        bool addAccount(string accountName, double balance); 
         void getUserData();
         void saveUserData();
         friend std::ostream& operator<<(std::ostream& stream, const User& u){

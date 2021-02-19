@@ -5,6 +5,13 @@
 
 using namespace std;
 
+struct account {
+    string accountName;
+    double balance;
+};
+
+vector<account> accounts;  
+
 User::User() {
     cout << "here" << endl;
     int min = 1000000, max = 9999999;
@@ -22,7 +29,6 @@ User::User(int accountNumber) {
         cerr << "Error. Unable to load user." << endl;
         exit(1);
     }
-
     string line;
     ifs >> line;
     firstName = line;
@@ -34,6 +40,13 @@ User::User(int accountNumber) {
     password = line;
     ifs >> line;
     isAdminAccount = stoi(line);
+    while(ifs >> line) {
+        account acc;
+        int index = line.find("$");
+        acc.accountName = line.substr(0, index);
+        acc.balance = stoi(line.substr(index+1)); 
+        accounts.push_back(acc);
+    }
     ifs.close();
 }
 
@@ -63,6 +76,26 @@ void User::setPassword(string password) {
     saveUserData();
 }
 
+bool User::addAccount(string accountName, double balance) {
+    if(balance < 0) {
+        return false;
+        cout << "Error: Account balance is invalid!" << endl;
+    } 
+    for(int i = 0; i < accounts.size(); i++) {
+        if(accounts[i].accountName.compare(accountName) == 0) {
+            cout << "Error: Account already exists!" << endl;
+            return false;
+        }
+    }
+    account acc;
+    acc.accountName = accountName;
+    acc.balance = balance;
+    accounts.push_back(acc);
+    saveUserData();
+    cout << "Account successfully added." << endl;
+    return true;
+}
+
 void User::getUserData() {
     cout << "Enter first name: ";
     cin >> firstName;
@@ -87,5 +120,8 @@ void User::saveUserData() {
     ofs << lastName << endl;
     ofs << password << endl;
     ofs << isAdminAccount << endl;
+    for(int i = 0; i < accounts.size(); i++) {
+        ofs << accounts[i].accountName << "$" << accounts[i].balance << endl;
+    }
     ofs.close(); 
 } 
