@@ -6,7 +6,14 @@
 using namespace std;
 
 class User {
-    private: 
+    protected: 
+        struct account {
+            bool isEnabled;
+            bool isStudentPlan;
+            string accountName;
+            double balance;
+        };
+        vector<account> accounts;  
         int accountNumber;
         string firstName;
         string middleName;
@@ -16,22 +23,32 @@ class User {
     public:
         User();
         User(int accountNumber);
-        User(int accountNumber, string firstName, string lastName);
         int getAccountNumber();
         string getFirstName();
         string getMiddleName();
         string getLastName();
         string getPassword();
+        vector<account> getAccounts();
         bool isAdmin();
         void setFirstName(string firstName);
         void setMiddleName(string middleName);
         void setLastName(string lastName);
         void setPassword(string password);
-        bool addAccount(string accountName, double balance); 
-        void getUserData();
+        void getUserData(int accountNumber);
+        void createUser();
         void saveUserData();
-        friend std::ostream& operator<<(std::ostream& stream, const User& u){
-            stream << u.firstName << " " << u.lastName << " : " << u.accountNumber;
+        int getAccountIndex(string accountName);
+        bool deposit(string accountName, double amount);
+        bool withdraw(string accountName, double amount);
+        bool createAccount(string accountName);
+        bool disableAccount(string accountName);
+        bool deleteAccount(string accountName);
+        bool changePlan(string accountName); 
+        friend std::ostream& operator<<(std::ostream& stream, const User& u) {
+            stream << u.firstName << " " << u.lastName << " [" << u.accountNumber << "]" << endl;
+            for(int i = 0; i < u.accounts.size(); i++) {
+                stream << u.accounts[i].accountName << ": $" << u.accounts[i].balance << endl;
+            }
             return stream;
         }
 };
