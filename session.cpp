@@ -10,6 +10,7 @@ using namespace std;
 // constructors
 Session::Session(User user) {
     this->user = user;
+    prompt();
 }
 
 // accessor methods
@@ -129,6 +130,51 @@ void Session::changePlan() {
     } else {
         string accountName = askAccountName(-1);
         user.changePlan(accountName);
+    }
+}
+
+void Session::prompt() {
+    int max = user.isAdmin() ? 8 : 4;
+    while(true) {
+        int option;
+        bool validOption = false;
+        cout << endl << "===========OPTIONS============" << endl;
+        cout << "[0] Logout" << endl;
+        cout << "[1] Deposit" << endl;
+        cout << "[2] Withdraw" << endl;
+        cout << "[3] Transfer" << endl;
+        cout << "[4] Pay-Bill" << endl;
+        if(user.isAdmin()) {
+            cout << "[5] Create Account" << endl;
+            cout << "[6] Disable Account" << endl;
+            cout << "[7] Delete Account" << endl;
+            cout << "[8] Change Plan" << endl;
+        }
+        while(!validOption) {
+            validOption = true;
+            cout << "Option: ";
+            cin >> option;
+            if(option < 0 || option > max) { validOption = false; } 
+        }
+        if(option == 0) {
+            break;
+        } else if (option == 1) {
+            deposit();
+        } else if (option == 2) {
+            withdraw();
+        } else if (option == 3) {
+            transfer();
+        } else if (option == 4) {
+            payBill();
+        } else if (option == 5) {
+            createAccount();
+        } else if (option == 6) {
+            disableAccount();
+        } else if (option == 7) {
+            deleteAccount();
+        } else if (option == 8) {
+            changePlan();
+        }
     }
 }
 

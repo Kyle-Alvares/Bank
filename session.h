@@ -25,6 +25,7 @@ class Session {
         void disableAccount();
         void deleteAccount();
         void changePlan();
+        void prompt();
         void save();
 };
 

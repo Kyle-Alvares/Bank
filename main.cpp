@@ -45,14 +45,6 @@ int main() {
         }
         cout << endl << "===========LOGGED IN===========" << endl;
         Session session(user);
-        // session.deposit();
-        // session.withdraw();
-        // session.transfer();
-        // session.createAccount();
-        // session.disableAccount();
-        // session.changePlan();
-        // session.deleteAccount();
-        cout << session.getUser() << endl; 
         session.save();
         cout << endl << "===========LOGGED OUT===========" << endl;
     }
