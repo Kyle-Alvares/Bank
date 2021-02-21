@@ -14,8 +14,6 @@ bool Login::verifyCredentials()
     string password;
     while (!validLogin && !validPassword)
     {
-        validLogin = true;
-        validPassword = true;
         cout << "Enter Account Number: ";
         cin >> accountNumber;
 
@@ -25,7 +23,6 @@ bool Login::verifyCredentials()
         {
             // We don't have a file that matches the account #, invalid login
             cerr << "Error: Invalid account number!" << endl;
-            validLogin = false;
         }
 
         // Instantly fail login after 3 failed password attempts.
@@ -44,7 +41,6 @@ bool Login::verifyCredentials()
             {
                 cout << "Error: Incorrect password!" << endl;
                 attempts++;
-                validPassword = false;
             }
         }
     }

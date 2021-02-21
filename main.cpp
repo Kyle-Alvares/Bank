@@ -22,7 +22,15 @@ int main()
         cin >> action;
         if (action == 1)
         {
-            l.verifyCredentials();
+            if (l.verifyCredentials())
+            {
+                cout << endl
+                     << "===========LOGGED IN===========" << endl;
+                Session session(user);
+                session.save();
+                cout << endl
+                     << "===========LOGGED OUT===========" << endl;
+            }
         }
         else if (action == 2)
         {
@@ -32,12 +40,6 @@ int main()
         {
             continue;
         }
-        cout << endl
-             << "===========LOGGED IN===========" << endl;
-        Session session(user);
-        session.save();
-        cout << endl
-             << "===========LOGGED OUT===========" << endl;
     }
     return 0;
 }
