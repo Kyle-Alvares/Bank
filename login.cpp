@@ -4,6 +4,7 @@ using namespace std;
 Login::Login()
 {
     validLogin = false;
+    validPassword = false;
     attempts = 0;
 }
 
@@ -11,8 +12,7 @@ bool Login::verifyCredentials()
 {
     int accountNumber;
     string password;
-    bool validPassword = false;
-    while (!validLogin || !validPassword)
+    while (!validLogin && !validPassword)
     {
         validLogin = true;
         validPassword = true;
@@ -32,8 +32,7 @@ bool Login::verifyCredentials()
         else if (attempts > 2)
         {
             cout << "Error: 3 failed login attempts!" << endl;
-            validLogin = false;
-            return validLogin;
+            return false;
         }
 
         else
@@ -49,5 +48,5 @@ bool Login::verifyCredentials()
             }
         }
     }
-    return validLogin;
+    return false;
 }

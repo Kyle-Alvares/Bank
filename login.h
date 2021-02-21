@@ -11,6 +11,7 @@ class Login {
     private:
         int attempts;
         bool validLogin;
+        bool validPassword;
         bool admin;
         User user;
     public:
