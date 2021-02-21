@@ -8,7 +8,7 @@ using namespace std;
 class User {
     protected: 
         struct account {
-            bool isEnabled;
+            bool disabled;
             bool isStudentPlan;
             string accountName;
             double balance;
@@ -42,6 +42,7 @@ class User {
         bool withdraw(string accountName, double amount);
         bool createAccount(string accountName);
         bool disableAccount(string accountName);
+        bool isDisabled(string accountName);
         bool deleteAccount(string accountName);
         bool changePlan(string accountName); 
         friend std::ostream& operator<<(std::ostream& stream, const User& u) {

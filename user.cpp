@@ -55,7 +55,7 @@ void User::createUser() {
     cin >> password;
     isAdminAccount = false;
     account acc;
-    acc.isEnabled = true;
+    acc.disabled = false;
     acc.isStudentPlan = false;
     acc.accountName = "chequings";
     acc.balance = 0;
@@ -84,7 +84,7 @@ void User::getUserData(int accountNumber) {
     while(ifs >> line) {
         account acc;
         int index = line.find("$");
-        acc.isEnabled = line.substr(0,1).compare("0") != 0;
+        acc.disabled = line.substr(0,1).compare("0") != 0;
         acc.isStudentPlan = line.substr(1,1).compare("0") != 0;
         acc.accountName = line.substr(2, index-2);
         acc.balance = stoi(line.substr(index+1)); 
@@ -105,7 +105,7 @@ void User::saveUserData() {
     ofs << password << endl;
     ofs << isAdminAccount << endl;
     for(int i = 0; i < accounts.size(); i++) {
-        ofs << accounts[i].isEnabled << accounts[i].isStudentPlan << accounts[i].accountName 
+        ofs << accounts[i].disabled << accounts[i].isStudentPlan << accounts[i].accountName 
             << "$" << accounts[i].balance << endl;
     }
     accounts.clear();
@@ -141,7 +141,7 @@ bool User::createAccount(string accountName) {
     if(!isAdmin()) return false;
     if(getAccountIndex(accountName) != -1) { return false; }
     account acc;
-    acc.isEnabled = true;
+    acc.disabled = false;
     acc.isStudentPlan = false;
     acc.accountName = accountName;
     acc.balance = 0;
@@ -153,8 +153,15 @@ bool User::disableAccount(string accountName) {
     if(!isAdmin()) return false;
     int index = getAccountIndex(accountName);
     if(index == -1) { return false; }
-    accounts[index].isEnabled = false;
+    accounts[index].disabled = true;
     return true;
+}
+
+bool User::isDisabled(string accountName) {
+    if(!isAdmin()) return false;
+    int index = getAccountIndex(accountName);
+    if(index == -1) { return false; }
+    return accounts[index].disabled;
 }
 
 bool User::deleteAccount(string accountName) {
