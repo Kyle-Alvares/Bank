@@ -38,7 +38,7 @@ void User::setPassword(string password) {
 void User::createUser() {
     bool accountExists = true;
     while(accountExists) {
-        int min = 1000000, max = 9999999;
+        int min = 10000, max = 99999;
         accountNumber = min + rand() % (max - min + 1); 
         ifstream ifs("./users/" + to_string(accountNumber) + ".txt");
         if(ifs.fail()){

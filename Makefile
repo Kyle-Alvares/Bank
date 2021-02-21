@@ -3,8 +3,8 @@ CFLAGS=-g -O2 # For optimization purposes, leave alone for now.
 CXXFLAGS=${CFLAGS} 
 EXECUTABLE_NAME := bank
 
-all: main.o user.o session.o login.o withdraw.o
-	$(CC) main.o user.o session.o login.o -o${EXECUTABLE_NAME}
+all: main.o user.o session.o request.o
+	$(CC) main.o user.o session.o request.o -o${EXECUTABLE_NAME}
 
 .PHONY: clean run # Not build targets, mark as .PHONY
 
@@ -23,8 +23,6 @@ user.o: user.h user.cpp
 session.o: session.h session.cpp 
 	$(CC) $(CXXFLAGS) -c session.cpp
 
-login.o: login.h login.cpp 
-	$(CC) $(CXXFLAGS) -c login.cpp
+request.o: request.h request.cpp 
+	$(CC) $(CXXFLAGS) -c request.cpp
 
-withdraw.o: withdraw.h withdraw.cpp
-	$(CC) $(CXXFLAGS) -c withdraw.cpp
