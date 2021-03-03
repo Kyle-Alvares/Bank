@@ -11,6 +11,12 @@
 using namespace std;
 using namespace req;
 
+const char* Session::companies[] = {
+            "The Bright Light Electric Compnay (EC)", 
+            "Credit Card Company Q (CQ)",
+            "Fast Internet Inc (FI)" };
+
+const char* Session::companyAbbrv[] = { "EC", "CQ", "FI" };
 // constructors
 Session::Session(User user) {
     this->user = user;
@@ -23,8 +29,9 @@ User Session::getUser() {
     return user;
 }
 
-double Session::withdraw(double max) {
-    cout << endl << "============WITHDRAW===========" << endl;
+double Session::withdraw(double max, bool displayHeader) {
+    if(displayHeader)
+        cout << endl << "============WITHDRAW===========" << endl;
     string accountName = askAccountName(user, -1);
     int index = user.getAccountIndex(accountName);
     double balance = user.getAccounts()[index].balance;
@@ -39,7 +46,7 @@ void Session::transfer() {
     cout << endl << "============TRANSFER===========" << endl;
     cout << mssg;
     int accountNumber = askAccountNumber(mssg);
-    double amount = withdraw(1000);
+    double amount = withdraw(1000, false);
     User other(accountNumber);
     other.deposit("chequings", amount);
     other.saveUserData();
@@ -69,15 +76,19 @@ void Session::payBill() {
     string company;
     bool validCompany = false;
     while(!validCompany) {
+        cout << "Companies: " << endl;
+        for (string c : companies) 
+            cout << c << endl;
         cout << "Enter company name: ";
         cin >> company;
-        if(company.compare("EC") == 0 || company.compare("CQ") == 0 || company.compare("FI") == 0) {
-            validCompany = true;
-        } else {
-            cerr << "Error: invalid name!" << endl;
-        }
+        for(string cA: companyAbbrv) 
+            if (company.compare(cA) == 0) 
+                validCompany = true;
+        if (!validCompany)
+            cerr << "Error: Invalid Name!" << endl;
     }
-    double amount = withdraw(2000);
+    cout << "Choose account to use to pay bill." << endl;
+    double amount = withdraw(2000, false);
     User other(accountNumber);
     other.deposit("chequings", amount);
     other.saveUserData();
@@ -163,7 +174,7 @@ void Session::prompt() {
         if(option == 0) {
             break;
         } else if (option == 1) {
-            withdraw(500);
+            withdraw(500, true);
         } else if (option == 2) {
             transfer();
         } else if (option == 3) {
